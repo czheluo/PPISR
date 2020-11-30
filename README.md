@@ -54,11 +54,13 @@
 > Compile in linux enviroment. make sure you add alias in path like  "alias matlab='/mnt/d/linux/MATLAB2016b/bin/matlab -nodesktop -nosplash -singleCompThread -logfile `date +%Y_%m_%d-%H_%M_%S`.log -r'" before Running. A Small GWAS Example Dataset Running as following:
 ```matlab
 %% not add covariates 
-$ matlab "ISR_linux('phefile','../data/pop.fam','genofile','../data/pop.traw','sample',87,'nSNP',28228,'ntrait',1,'ncov',5),exit;"
+$ matlab "PPISR_linux('phefile','../data/pop.fam','genofile','../data/pop.traw','sample',87,'nSNP',28228,'ntrait',1,'ncov',5),exit;"
 %% add five PCs as covariates
-$ matlab "ISR_linux('phefile','../data/pop.fam','genofile','../data/pop.traw','sample',87,'nSNP',28228,'ntrait',1,'ncov',5),exit;"
+$ matlab "PPISR_linux('phefile','../data/pop.fam','genofile','../data/pop.traw','sample',87,'nSNP',28228,'ntrait',1,'ncov',5),exit;"
 %% nolinear model and epistasis 
-$ matlab "ISR_linux('phefile','../data/pop.fam','genofile','../data/pop.traw','sample',87,'nSNP',28228,'ntrait',1,'ncov',5,'mdl',2),exit;"
+$ matlab "PPISR_linux('phefile','../data/pop.fam','genofile','../data/pop.traw','sample',87,'nSNP',28228,'ntrait',1,'ncov',5,'mdl',2),exit;"
+%% load mat data
+$ matlab "PPISR_linux('matfile','demo.mat','sample',798,'nSNP',92641,'ncov',3),exit;"
 $ Basic Usage
 Options :
 phefile = string, can be any of file format split with "\t"(default = 'phe.fam')
