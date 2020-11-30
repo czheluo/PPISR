@@ -17,7 +17,7 @@
 </div></font> </span>
 
 # Installation
->Only to need install [MATLAB](https://www.mathworks.com/products/matlab.html) software which the code can compile in linux and window environment.
+>Only to need install [MATLAB](https://www.mathworks.com/products/matlab.html) software which the code can compile in linux and window environment.If you runing in linux, you need install [plink](https://www.cog-genomics.org/plink/) for data file transform.
 # Data Preparation
 ## Missing genotypes 
 > <span style="font-family: Times New Roman; font-size:1em;"><font size="4"> <div align="justify">The ISR method relies on having complete or imputed genotype data at each SNP. That is, ISR requires the user to impute all missing genotypes before perform association testing. This imputation step is arguably preferable than simply dropping individuals with missing genotypes since it can improve power to detect associations. Therefore, for ﬁtting ISR that missing genotypes are recommended to be imputed ﬁrst (e.g.,using the [Beagle](https://faculty.washington.edu/browning/beagle/beagle.html)). Otherwise, the missing genotypes for SNPs which replaced with the estimated mean or median genotype of that SNP in ISR.</div></font> </span>
