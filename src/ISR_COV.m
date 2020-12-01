@@ -584,19 +584,21 @@ lm=str2num(new_tr);markers=marker(lm);chrgl=chr(lm);poslm=pos(lm);
 Marker=markers;chromosome=chrgl;position=poslm;p_f=pr;beta=b(npc+2:end);sebeta=SEb(npc+1:end);r2=r2lz;
 opt_result=table(Marker,chromosome,position,flz,p_f,beta,sebeta,r2);
 SNP=marker;Chromosome=chr;Position=pos;Ft=ft;P_F=plm;Beta=effect;SEbeta=seblm;R2=r2lm;
-x0=[ones(size(X(testing,:),1),1) X(testing,lm)];
-x1=[ones(size(X(trainning,:),1),1) X(trainning,lm)];
+%save all.mat
+x00=[ones(size(xte,1),1) xte(:,lm)];
+x11=[ones(size(xtr,1),1) xtr(:,lm)];
+beffect=ones(1+size(beta,1),1);
+beffect(1)=b(1);beffect(2:end)=beta;
 prediction=ones(size(Y,1),1);
-predmat1=x0*beta;
-predmat2=x1*beta;
-prediction(testing,1)=predmat1;
-prediction(trainning,1)=predmat2;
-rinf=corr(Y(testing,ny),predmat1);
-rref=corr(Y(trainning,ny),predmat2);
-save('ISR_result.mat','all_result','opt_result','marker','chr','pos','plm','prediction','rinf','rref','-v7.3');
+prediction(testing,1)=x00*beffect;
+prediction(trainning,1)=x11*beffect;
+rinf=corr(Y(testing,1),prediction(testing,1)).^2;
+rref=corr(Y(trainning,1),prediction(trainning,1)).^2;
 all_result=table(SNP,Chromosome,Position,Ft,P_F,Beta,SEbeta,R2);
+save('PPISR_result.mat','all_result','opt_result','marker','chr','pos','plm','prediction','rinf','rref','-v7.3');
+
 lmbx=x(:,lm);
 if gr==1
-xlswrite(genotype,lmbx,1);
-%xlswrite(genotype,Bx,2);
+   xlswrite(genotype,lmbx,1);
+   %xlswrite(genotype,Bx,2);
 end

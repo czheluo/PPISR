@@ -577,16 +577,15 @@ Marker=markers;chromosome=chrgl;position=poslm;p_f=pr;beta=b(2:end);sebeta=SEb;r
 opt_result=table(Marker,chromosome,position,f,p_f,beta,sebeta,r2);
 SNP=marker;Chromosome=chr;Position=pos;Ft=ft;P_F=plm;Beta=effect;SEbeta=seblm;R2=r2lm;
 all_result=table(SNP,Chromosome,Position,Ft,P_F,Beta,SEbeta,R2);
-x0=[ones(size(X(testing,:),1),1) X(testing,lm)];
-x1=[ones(size(X(trainning,:),1),1) X(trainning,lm)];
+%save result.mat
+x00=[ones(size(xte,1),1) xte(:,lm)];
+x11=[ones(size(xtr,1),1) xtr(:,lm)];
 prediction=ones(size(Y,1),1);
-predmat1=x0*beta;
-predmat2=x1*beta;
-prediction(testing,1)=predmat1;
-prediction(trainning,1)=predmat2;
-rinf=corr(Y(testing,ny),predmat1);
-rref=corr(Y(trainning,ny),predmat2);
-save('ISR_result.mat','all_result','opt_result','marker','chr','pos','plm','prediction','-v7.3');
+prediction(testing,1)=x00*b;
+prediction(trainning,1)=x11*b;
+rinf=corr(Y(testing,1),prediction(testing,1)).^2;
+rref=corr(Y(trainning,1),prediction(trainning,1)).^2;
+save('PPIISR_result.mat','all_result','opt_result','marker','chr','pos','plm','prediction','rinf','rref','-v7.3');
 
 lmbx=x(:,lm);
 if gr==1

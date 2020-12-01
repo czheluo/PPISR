@@ -765,17 +765,8 @@ elseif mdl==2
     %output the all result
     %SNP=marker;Chr=chrgl;Position=poslm;
     Ft=ft;P_F=plm;Beta=effect;SEbeta=seblm;R2=r2lm;SNP=trnum;
-    x0=[ones(size(x(testing,:),1),1) x(testing,lm)];
-    x1=[ones(size(x(trainning,:),1),1) x(trainning,lm)];
-    prediction=ones(size(Y,1),1);
-    predmat1=x0*beta;
-    predmat2=x1*beta;
-    prediction(testing,1)=predmat1;
-    prediction(trainning,1)=predmat2;
-    rinf=corr(Y(testing,ny),predmat1);
-    rref=corr(Y(trainning,ny),predmat2);
     all_result=table(SNP,Ft,P_F,Beta,SEbeta,R2);
-    save([allresult_name '.mat'],'all_result','SNP','Ft','P_F','Beta','SEbeta','R2','prediction','-v7.3');
+    save('PPIISR_EPI.mat','all_result','SNP','Ft','P_F','Beta','SEbeta','R2','prediction','rinf','rref','-v7.3');
     %clear marker chrgl poslm 
 else
     error('Dosent chosen the right model')
