@@ -14,7 +14,7 @@ function []=PPISR_linux(varargin)
     outfile = ft_getopt(varargin, 'outfile', 'pop.traw.mat');
     sample = ft_getopt(varargin, 'sample',[]);
     nSNP = ft_getopt(varargin, 'nSNP', []);
-    ntrait = ft_getopt(varargin, 'ntrait', []);
+    ntrait = ft_getopt(varargin, 'ntrait', 1);
     chr = ft_getopt(varargin, 'nchr', []);
     opt_outresult = ft_getopt(varargin, 'opt_outresult', 'ISR.opt.outresult.txt');
     all_outresult = ft_getopt(varargin, 'all_outresult', 'ISR.outresult.txt');
@@ -41,7 +41,8 @@ function []=PPISR_linux(varargin)
     %sgv = number, the bonferroni correction for association tests results.
     %mdl = number,1 for linear model and 2 or 3 for nolinear model ; input('Using Model II(without square term 2) or Model III(with square term 3) 2/3? ');
     % Usage:
-    %       matlab "ISR_linux('phefile','../data/pop.fam','genofile','../data/pop.traw','sample',87,'nSNP',28228,'ntrait',1,'ncov',5),exit;"
+    %       matlab "PPISR_linux('phefile','../data/pop.fam','genofile','../data/pop.traw','sample',87,'nSNP',28228,'ntrait',1,'ncov',5),exit;"
+    %       matlab "PPISR_linux('matfile','demo.mat','sample',798,'nSNP',92641),exit;"
            
     %default parameter
     %if ~exist('outfile')
@@ -55,6 +56,8 @@ function []=PPISR_linux(varargin)
     %end
     %maxNumCompThreads=1;
     % write a shell script for ISR getopt....
+    %clear;clc;
+    %maxNumCompThreads(1)=1;
     if ~isempty(vcf)
         system(['plink ',' --vcf ',vcf,' --recode A-transpose --out pop']);
         traw2mat(phefile,genofile,outfile,sample,nSNP,ntrait,IM);
@@ -92,7 +95,7 @@ function []=PPISR_linux(varargin)
         %which=foldid==i;
         %if verbous, disp(['Fitting fold # ' num2str(i) ' of ' num2str(nfolds)]);end
         % x=reperma
-        x=X(trainning,:);y=Y(trainning,ny);
+        x=X(trainning,:);y=Y(trainning,1);xte=X(testing,:);xtr=X(trainning,:);
         %find the MISSING DATA add to the program
         % [n,p]=size(x);
         % for i=1:n
@@ -118,7 +121,7 @@ function []=PPISR_linux(varargin)
             end
         end     
        %changing possible the last association results
-        writetable(opt_result,opt_outresult,'Delimiter','\t');writetable(all_result,all_outresult,'Delimiter','\t');
+        %writetable(opt_result,opt_outresult,'Delimiter','\t');writetable(all_result,all_outresult,'Delimiter','\t');
         diary off
         
     elseif method=='fold'
@@ -160,4 +163,4 @@ function []=PPISR_linux(varargin)
         diary off 
     end
 end
-    
+   
